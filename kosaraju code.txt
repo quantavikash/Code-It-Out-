@@ -1,0 +1,118 @@
+/*J. M. D. */
+#include <bits/stdc++.h>
+using namespace std;
+#define int             long long 
+#define pll             pair<int,int>
+#define ppll            pair<int,pll>
+#define vvll            vector<vector<int>>
+#define sll             stack<int>
+#define qll             queue<int>
+#define vll             vector<int>
+#define vpll            vector<pll>
+#define vc              vector <char>
+#define vs              vector <string>
+#define pb              emplace_back
+#define prq             priority_queue
+#define setbits(x)      __builtin_popcountll(x)
+#define sps(x,y)        fixed<<setprecision(y)<<x
+#define hell            1000000007
+#define rep(i,s,n)      for(int i=s;i<n;i++)
+#define ff              first
+#define mem(arr,x)      memset(arr,x,sizeof(arr))
+#define ss              second
+#define pi              3.14159265358979323846
+#define all(v)          v.begin(),v.end()
+#define allr(x)         x.rbegin(),x.rend()
+#define mp              make_pair
+#define maxn            1001
+void fast()
+{
+	ios_base::sync_with_stdio(0);
+	cin.tie(0); cout.tie(0);
+#ifndef ONLINE_JUDGE
+	freopen("input.txt", "r", stdin);
+	freopen("output.txt", "w", stdout);
+#endif
+}
+const int N = (int)2e5 + 100;
+//---------------------------------------------
+int dr[4] = {0, 0, 1,-1};
+int dc[4] = {1,-1, 0, 0};
+ 
+int ddr[8]= {0, 0, 1, -1, 1, -1, 1, -1};
+int ddc[8]= {1, -1, 0, 0, 1, -1, -1, 1};
+
+int ddr1[8]= {1, 1, -1, -1, 2, 2, -2, -2};
+int ddc1[8]= {2, -2, 2, -2, 1, -1, 1, -1};
+//---------------------------------------------
+
+int vis[maxn];
+vll v[maxn], tr[maxn];
+vll order, scc;
+
+void dfs(int node){
+	vis[node]=1;
+
+	for(auto i:v[node]){
+		if(vis[i]==0) dfs(i);
+	}
+
+	order.pb(node);
+}
+
+void dfs1(int node){
+	vis[node]=1;
+
+	for(auto i:tr[node]){
+		if(vis[i]==0) dfs1(i);
+	}
+
+	scc.pb(node);
+}
+
+
+
+
+
+int32_t main() {
+     fast();
+	int t,z;
+    cin>>t;
+     rep(z,1,t+1){
+    //cout<<"Case #"<<z<<": "
+    int n,m;
+    cin>>n>>m;
+
+    //mem(order,0);
+    mem(vis,0);
+    //scc.clear();
+    order.clear();
+    rep(i,0,n+1){
+    	v[i].clear();
+    	tr[i].clear();
+    }
+
+    rep(i,0,m){
+    	int x,y;
+    	cin>>x>>y;
+    	v[x].pb(y);
+    	tr[y].pb(x);
+    }
+
+    rep(i,1,n+1){
+    	if(vis[i]==0) dfs(i);
+    }
+
+    mem(vis,0);
+
+    rep(i,1,n+1){
+    	if(vis[order[n-i]]==0){
+    		scc.clear();
+    		dfs1(order[n-i]);
+    		cout<<"dfs was called from"<<order[n-i]<<"and SCC is\n";
+    		for(auto i:scc) cout<<i<<" ";
+    		cout<<"\n";
+    }
+
+    }
+}}
